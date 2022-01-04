@@ -8,17 +8,23 @@ namespace ConsoleApp1.demos.FunDemo
 {
     public class DoSometingDemo
     {
-        public  DoSometingDemo(int _inter,Func<int, string> chanageRemark)
+        public DoSometingDemo(int _inter, Func<int, string> changeRemark, ChangeRemarkDelegate changeRemarkDelegate)
         {
-            ChanageRemark = chanageRemark;
-            Remark = ChanageRemark(_inter);
+            _changeRemark = changeRemark;
+            RemarkFunStr = _changeRemark(_inter);
+            _changeRemarkDelegate = changeRemarkDelegate;
+            RemarkDelegateStr = _changeRemarkDelegate(_inter);
         }
 
-        /// <summary>
-        /// 备注
-        /// </summary>
-        public string Remark { get; }
 
-        protected Func<int, string> ChanageRemark;
+        public string RemarkFunStr { get; set; }
+
+        public string RemarkDelegateStr { get; set; }
+
+        public delegate string ChangeRemarkDelegate(int input);
+
+        protected Func<int, string> _changeRemark;
+
+        protected ChangeRemarkDelegate _changeRemarkDelegate;
     }
 }

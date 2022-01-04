@@ -1,8 +1,6 @@
-﻿using ConsoleApp1.demos.AttributDemo;
-using ConsoleApp1.demos.CodeEditDemo;
-using ConsoleApp1.demos.FunDemo;
-using EvalGuy;
+﻿using ConsoleApp1.demos.FunDemo;
 using Microsoft.International.Converters.PinYinConverter;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,16 +11,11 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            #region 编译字符串
-
-            var code = Evaluator.EvaluateToString("Console.WriteLine(\"jk\"); ");
-
-            #endregion
 
             #region 方法委托demo
-            //int i = 0;
-            //var demo = new DoSometingDemo(i, ChanageRemark);
-            //Console.WriteLine(demo.Remark); 
+            int i = 0;
+            var demo = new DoSometingDemo(i, ChangeRemark, ChangeRemarkDelegate);
+            Console.WriteLine(JsonConvert.SerializeObject(demo));
             #endregion
 
             #region 自定义标签使用demo
@@ -41,12 +34,22 @@ namespace ConsoleApp1
             #endregion
         }
 
-        public static string ChanageRemark(int i)
+        public static string ChangeRemark(int i)
         {
             return i switch
             {
                 0 => "零",
                 1 => "一",
+                _ => "无"
+            };
+        }
+
+        public static string ChangeRemarkDelegate(int i)
+        {
+            return i switch
+            {
+                0 => "零" + i,
+                1 => "一" + i,
                 _ => "无"
             };
         }
